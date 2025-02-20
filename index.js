@@ -31,63 +31,74 @@ const transporter = nodemailer.createTransport({
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
-
 app.use('/screenshots', express.static(path.join(__dirname, 'screenshots')));
 
 app.get('/preview', async (req, res) => {
-    const { url } = req.query;
-  
-    if (!url) {
+  const { url } = req.query;
+
+  if (!url) {
       return res.status(400).send('Se requiere una URL.');
-    }
-  
-    const outputDir = path.join(__dirname, 'screenshots');
-    const hash = crypto.createHash('md5').update(url).digest('hex');
-    const cachedImagePath = path.join(outputDir, `${hash}.png`);
-  
-    // Verificar si la imagen ya está en caché
-    if (fs.existsSync(cachedImagePath)) {
+  }
+
+  const outputDir = path.join(__dirname, 'screenshots');
+  const hash = crypto.createHash('md5').update(url).digest('hex');
+  const cachedImagePath = path.join(outputDir, `${hash}.png`);
+
+  if (fs.existsSync(cachedImagePath)) {
       return res.json({ imageUrl: `/screenshots/${path.basename(cachedImagePath)}` });
-    }
-  
-    // Si la imagen no existe, generar la captura de pantalla
-    if (!fs.existsSync(outputDir)) {
+  }
+
+  if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
-    }
-  
-    try {
-      const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-      const page = await browser.newPage();
-  
-      // Desactivar imágenes y fuentes
-      await page.setRequestInterception(true);
-      page.on('request', (request) => {
-        if (['image', 'font'].includes(request.resourceType())) {
-          request.abort();
-        } else {
-          request.continue();
-        }
+  }
+
+  try {
+      const browser = await puppeteer.launch({
+          headless: 'new',
+          args: ['--no-sandbox', '--disable-setuid-sandbox']
       });
-  
-      // Reducir el tiempo de espera
-      await page.goto(url, { waitUntil: 'networkidle2', timeout: 8000 });
-  
-      // Esperar a que el cuerpo de la página cargue
-      await page.waitForSelector('body');
-  
-      // Configurar la vista en una resolución menor
-      await page.setViewport({ width: 800, height: 600 });
-  
-      // Tomar la captura de pantalla
-      await page.screenshot({ path: cachedImagePath });
+      const page = await browser.newPage();
+
+      await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+      await page.setViewport({ width: 1920, height: 1080 });
+      await page.goto(url, { waitUntil: 'networkidle0', timeout: 20000 });
+
+      await page.evaluate(async () => {
+          await new Promise(resolve => {
+              let totalHeight = 0;
+              const distance = 100;
+              const timer = setInterval(() => {
+                  window.scrollBy(0, distance);
+                  totalHeight += distance;
+
+                  if (totalHeight >= document.body.scrollHeight) {
+                      clearInterval(timer);
+                      resolve();
+                  }
+              }, 100);
+          });
+      });
+
+      await page.evaluate(async () => {
+          const images = Array.from(document.images);
+          await Promise.all(images.map(img => img.complete ? null : new Promise(resolve => img.onload = resolve)));
+
+          const fonts = document.fonts;
+          await fonts.ready;
+      });
+
+      await page.screenshot({ path: cachedImagePath, fullPage: true });
+
       await browser.close();
-  
+
       res.json({ imageUrl: `/screenshots/${path.basename(cachedImagePath)}` });
-    } catch (error) {
+  } catch (error) {
       console.error(error);
       res.status(500).send('Error al generar la captura.');
-    }
-  });
+  }
+});
+
+
 app.post('/send-email', async (req, res) => {
     const { name, email, message } = req.body;
 

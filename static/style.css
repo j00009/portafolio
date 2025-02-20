@@ -121,7 +121,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(45deg, rgb(146, 220, 230), black, rgb(126, 83, 175));
+    background: linear-gradient(45deg, #ff2d75, #4fc3dc);
     border-radius: 50%;
     padding: 5.6px;
 
@@ -263,8 +263,8 @@ body {
 }
 
 .stack-box img {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 70px;
+    max-height: 70px;
     object-fit: cover;
 }
 
@@ -309,6 +309,18 @@ body {
 
 }
 
+
+.card-container .card-text{
+    height: 17rem;
+}
+
+.card-container .card-link{
+    color: #4fc3dc;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    font-size: large;
+    font-style: italic;
+}
 .card {
     background-color: transparent;
     border: 1px solid aliceblue;

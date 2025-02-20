@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 3000);  // 3000 milisegundos = 3 segundos
 
                 console.error('Error al enviar los datos:', error);
-                
+
             }
         });
         function limpiarFormulario(form) {
@@ -97,19 +97,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
 
-               
+
                 setTimeout(() => {
-                    responseMessage.innerHTML = '';  
-                }, 3000);  
+                    responseMessage.innerHTML = '';
+                }, 3000);
                 limpiarFormulario(formModal)
             } catch (error) {
                 const responseMessage = document.getElementById('response-message-modal');
                 responseMessage.innerHTML = '<div class="alert alert-danger">Hubo un error al enviar el correo.</div>';
 
-               
+
                 setTimeout(() => {
-                    responseMessage.innerHTML = '';  
-                }, 3000);  
+                    responseMessage.innerHTML = '';
+                }, 3000);
 
                 console.error('Error al enviar los datos:', error);
             }
@@ -248,26 +248,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fetchPreview = async (url, imgElements) => {
         try {
-          // Mostrar la imagen de carga primero para cada imagen
-          imgElements.forEach(img => img.src = 'cargando.gif');
-      
-          // Hacer la solicitud al servidor para generar la captura
-          const response = await fetch(`/preview?url=${encodeURIComponent(url)}`);
-          if (response.ok) {
-            const data = await response.json(); // Obtener la URL de la imagen generada
-            // Actualizar la imagen con la URL generada para cada imagen en el DOM
-            imgElements.forEach(img => img.src = data.imageUrl);
-          } else {
-            console.error('Error al obtener la captura de pantalla');
-          }
+            // Mostrar la imagen de carga primero para cada imagen
+            imgElements.forEach(img => img.src = 'cargando.gif');
+
+            // Hacer la solicitud al servidor para generar la captura
+            const response = await fetch(`/preview?url=${encodeURIComponent(url)}`);
+            if (response.ok) {
+                const data = await response.json(); // Obtener la URL de la imagen generada
+                // Actualizar la imagen con la URL generada para cada imagen en el DOM
+                imgElements.forEach(img => img.src = data.imageUrl);
+            } else {
+                console.error('Error al obtener la captura de pantalla');
+            }
         } catch (error) {
-          console.error('Error:', error);
+            console.error('Error:', error);
         }
-      };
-      
-      // Usar la función para cargar la previsualización
-      const url = 'https://www.youtube.com/'; // Aquí va la URL que deseas previsualizar
-      const imgElements = document.querySelectorAll('.preview-image'); // Selecciona todas las imágenes con la clase 'preview-image'
-      fetchPreview(url, imgElements);
-      
+    };
+
+    // Usar la función para cargar la previsualización
+    const urlp_1 = 'https://skatepark.logicaldevjt.cl/';
+    const imgElementsp_1 = document.querySelectorAll('.preview-imagep1');
+    fetchPreview(urlp_1, imgElementsp_1);
+   
+    const urlp_2 = 'https://bancosolar.logicaldevjt.cl/';
+    const imgElementsp_2 = document.querySelectorAll('.preview-imagep2');
+    fetchPreview(urlp_2, imgElementsp_2); 
+    
+    const urlp_3 = 'https://superheroapi.logicaldevjt.cl/';
+    const imgElementsp_3 = document.querySelectorAll('.preview-imagep3');
+    fetchPreview(urlp_3, imgElementsp_3);
+
+    const urlp_4 = 'https://likeme.logicaldevjt.cl/';
+    const imgElementsp_4 = document.querySelectorAll('.preview-imagep4');
+    fetchPreview(urlp_4, imgElementsp_4);
+
+    const urlp_5 = 'https://viajeschile.logicaldevjt.cl/';
+    const imgElementsp_5 = document.querySelectorAll('.preview-imagep5');
+    fetchPreview(urlp_5, imgElementsp_5);
+
+    const urlp_6 = 'https://fbisys.logicaldevjt.cl/';
+    const imgElementsp_6 = document.querySelectorAll('.preview-imagep6');
+    fetchPreview(urlp_6, imgElementsp_6);
+
+    const urlp_7 = 'https://clubdeportivo.logicaldevjt.cl/';
+    const imgElementsp_7 = document.querySelectorAll('.preview-imagep7');
+    fetchPreview(urlp_7, imgElementsp_7);
+
+    const urlp_8 = 'https://blackandwhite.logicaldevjt.cl/';
+    const imgElementsp_8 = document.querySelectorAll('.preview-imagep8');
+    fetchPreview(urlp_8, imgElementsp_8);
+    
+
 });
