@@ -10,15 +10,15 @@ const crypto = require('crypto');
 
 
 const app = express();
-
+app.use(express.static('assets'));
+app.use(express.static('static'))
 
 // Configuración de middleware mailer
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 // Configuración de archivos estáticos
-app.use(express.static('assets'));
-app.use(express.static('static'))
+
 // Configuración del transportador de correos
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -27,6 +27,9 @@ const transporter = nodemailer.createTransport({
         pass: process.env.MAILER_PASS
     }
 });
+
+
+
 // Ruta para el index.html
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/index.html");
