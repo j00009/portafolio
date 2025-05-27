@@ -45,7 +45,7 @@ app.get('/preview', async (req, res) => {
 
   const outputDir = path.join(__dirname, 'screenshots');
   const hash = crypto.createHash('md5').update(url).digest('hex');
-  const cachedImagePath = path.join(outputDir, `${hash}.png`);
+  const cachedImagePath = path.join(outputDir, `${hash}.jpg`);
 
   if (fs.existsSync(cachedImagePath)) {
       return res.json({ imageUrl: `/screenshots/${path.basename(cachedImagePath)}` });
@@ -57,7 +57,7 @@ app.get('/preview', async (req, res) => {
 
   try {
       const browser = await puppeteer.launch({
-          headless: 'new',
+	  headless: true,
           args: ['--no-sandbox', '--disable-setuid-sandbox']
       });
       const page = await browser.newPage();
@@ -165,6 +165,6 @@ app.post('/send-email-modal', async (req, res) => {
 
 
 
-
+console.log("Cargando variable MAILER_USER:", process.env.MAILER_USER);
 // Servidor escuchando en el puerto 3000
 app.listen(3000, () => console.log('App corriendo en p 3000'));
