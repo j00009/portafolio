@@ -136,11 +136,11 @@ body {
 
 @media (max-width: 768px) {
     img {
-      width: 100%;
-      height: auto;
+        width: 100%;
+        height: auto;
     }
-  }
-  
+}
+
 
 .container-box {
     position: absolute;
@@ -169,7 +169,7 @@ body {
 }
 
 .container-box h1 {
-    
+
     color: #ffffff;
     text-align: center;
     font-family: "Montserrat", sans-serif;
@@ -220,10 +220,11 @@ body {
     align-items: center;
     gap: 15px;
     margin: 50px 35px 0;
-    
+
 
 }
-.espacio{
+
+.espacio {
     width: 100%;
     height: 5rem;
 }
@@ -256,10 +257,103 @@ body {
 .stack {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    flex-direction: row;
     width: 100%;
+    gap: 10px;
 }
 
+/* nuevo css*/
+.skills {
+    background-color: #000000de;
+    flex: 0 0 calc(33.33% - 10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: medium;
+    font-weight: 300;
+    padding: 1rem;
+    overflow: hidden;
+    color: aliceblue;
+    height: auto;
+}
+
+.listas {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: center;
+    margin: 10px 0 0 0;
+    padding: 0;
+
+}
+
+.listas dd {
+    margin-left: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.skills i {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    display: inline-block;
+}
+
+.skills h4 {
+    color: #4fc3dc;
+    margin-bottom: 0.5rem;
+}
+
+.listas i {
+    font-size: large;
+    margin-right: 5px;
+    margin-left: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.listas dd {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.3rem 0;
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.listas dd i {
+    width: 1.2rem;
+    text-align: center;
+}
+
+.second-stack {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+    gap: 10px;
+}
+
+
+@media (max-width: 768px) {
+    .second-stack {
+        display: flex;
+        flex-direction: column;
+
+
+    }
+
+    .skills {
+        width: 100%;
+        margin: 0px;
+    }
+
+
+}
+
+/*fin nuevo css*/
 .stack-box {
     display: flex;
     align-items: center;
@@ -307,10 +401,13 @@ body {
 }
 
 .card-img-top {
-    height: 200px; /* Altura fija para las imágenes */
-    object-fit: cover; /* Ajusta la imagen sin distorsionarla */
-    width: 100%; /* Asegura que ocupe todo el ancho de la tarjeta */
-  }
+    height: 200px;
+    /* Altura fija para las imágenes */
+    object-fit: cover;
+    /* Ajusta la imagen sin distorsionarla */
+    width: 100%;
+    /* Asegura que ocupe todo el ancho de la tarjeta */
+}
 
 .card-container {
     display: flex;
@@ -323,18 +420,19 @@ body {
 }
 
 
-.card-container .card-text{
+.card-container .card-text {
     height: 17rem;
-    background-color:#000000de;
+    background-color: #000000de;
 }
 
-.card-container .card-link{
+.card-container .card-link {
     color: #4fc3dc;
     font-family: "Montserrat", sans-serif;
     font-weight: 300;
     font-size: large;
     font-style: italic;
 }
+
 .card {
     background-color: transparent;
     border: 1px solid aliceblue;
@@ -913,7 +1011,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 
-.mt-3{
+.mt-3 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -921,7 +1019,7 @@ body::-webkit-scrollbar-thumb {
     width: 100%;
 }
 
-.alert{
+.alert {
     position: relative;
     justify-content: center;
     align-items: center;
@@ -939,52 +1037,53 @@ body::-webkit-scrollbar-thumb {
     }
 
     .educacion-container {
-        display: flex; 
-        flex-direction: row; 
-        align-items: stretch; 
-        width: 100%; 
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        width: 100%;
         height: auto;
     }
 
     .text-edu {
         width: 100%;
-        font-size: small; 
+        font-size: small;
         display: flex;
-        flex-direction: column; 
-        justify-content: start; 
+        flex-direction: column;
+        justify-content: start;
     }
 
     .date-edu {
-        width: 100%; 
-        font-size: small; 
-        display: flex; 
-        align-items: center; 
-        justify-content: flex-end; 
+        width: 100%;
+        font-size: small;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
     }
-    
+
     .date-edu p {
-        margin: 0; 
+        margin: 0;
     }
+
     .frame {
-        width: 30px; 
+        width: 30px;
         height: 30px;
     }
 
     .frame i {
-        font-size: 18px; 
+        font-size: 18px;
     }
 
     .conex {
-        display: flex; 
-        align-items: start; 
-        justify-content: start; 
-        flex-shrink: 0; 
-        height: auto; 
-        position: relative; 
+        display: flex;
+        align-items: start;
+        justify-content: start;
+        flex-shrink: 0;
+        height: auto;
+        position: relative;
     }
 
-    .educacion-container > .conex {
-        flex: 0 0 auto; 
+    .educacion-container>.conex {
+        flex: 0 0 auto;
     }
 
     .conex::before {
@@ -992,8 +1091,8 @@ body::-webkit-scrollbar-thumb {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        width: 2%; 
+        width: 2%;
         height: 100%;
-        background-color: aliceblue; 
+        background-color: aliceblue;
     }
 }

@@ -37,68 +37,68 @@ app.get('/', (req, res) => {
 app.use('/screenshots', express.static(path.join(__dirname, 'screenshots')));
 
 app.get('/preview', async (req, res) => {
-  const { url } = req.query;
+    const { url } = req.query;
 
-  if (!url) {
-      return res.status(400).send('Se requiere una URL.');
-  }
+    if (!url) {
+        return res.status(400).send('Se requiere una URL.');
+    }
 
-  const outputDir = path.join(__dirname, 'screenshots');
-  const hash = crypto.createHash('md5').update(url).digest('hex');
-  const cachedImagePath = path.join(outputDir, `${hash}.jpg`);
+    const outputDir = path.join(__dirname, 'screenshots');
+    const hash = crypto.createHash('md5').update(url).digest('hex');
+    const cachedImagePath = path.join(outputDir, `${hash}.jpg`);
 
-  if (fs.existsSync(cachedImagePath)) {
-      return res.json({ imageUrl: `/screenshots/${path.basename(cachedImagePath)}` });
-  }
+    if (fs.existsSync(cachedImagePath)) {
+        return res.json({ imageUrl: `/screenshots/${path.basename(cachedImagePath)}` });
+    }
 
-  if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir);
-  }
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir);
+    }
 
-  try {
-      const browser = await puppeteer.launch({
-	  headless: true,
-          args: ['--no-sandbox', '--disable-setuid-sandbox']
-      });
-      const page = await browser.newPage();
+    try {
+        const browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
+        const page = await browser.newPage();
 
-      await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
-      await page.setViewport({ width: 1920, height: 1080 });
-      await page.goto(url, { waitUntil: 'networkidle0', timeout: 20000 });
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+        await page.setViewport({ width: 1920, height: 1080 });
+        await page.goto(url, { waitUntil: 'networkidle0', timeout: 20000 });
 
-      await page.evaluate(async () => {
-          await new Promise(resolve => {
-              let totalHeight = 0;
-              const distance = 100;
-              const timer = setInterval(() => {
-                  window.scrollBy(0, distance);
-                  totalHeight += distance;
+        await page.evaluate(async () => {
+            await new Promise(resolve => {
+                let totalHeight = 0;
+                const distance = 100;
+                const timer = setInterval(() => {
+                    window.scrollBy(0, distance);
+                    totalHeight += distance;
 
-                  if (totalHeight >= document.body.scrollHeight) {
-                      clearInterval(timer);
-                      resolve();
-                  }
-              }, 100);
-          });
-      });
+                    if (totalHeight >= document.body.scrollHeight) {
+                        clearInterval(timer);
+                        resolve();
+                    }
+                }, 100);
+            });
+        });
 
-      await page.evaluate(async () => {
-          const images = Array.from(document.images);
-          await Promise.all(images.map(img => img.complete ? null : new Promise(resolve => img.onload = resolve)));
+        await page.evaluate(async () => {
+            const images = Array.from(document.images);
+            await Promise.all(images.map(img => img.complete ? null : new Promise(resolve => img.onload = resolve)));
 
-          const fonts = document.fonts;
-          await fonts.ready;
-      });
+            const fonts = document.fonts;
+            await fonts.ready;
+        });
 
-      await page.screenshot({ path: cachedImagePath, fullPage: true });
+        await page.screenshot({ path: cachedImagePath, fullPage: true });
 
-      await browser.close();
+        await browser.close();
 
-      res.json({ imageUrl: `/screenshots/${path.basename(cachedImagePath)}` });
-  } catch (error) {
-      console.error(error);
-      res.status(500).send('Error al generar la captura.');
-  }
+        res.json({ imageUrl: `/screenshots/${path.basename(cachedImagePath)}` });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al generar la captura.');
+    }
 });
 
 
@@ -165,6 +165,5 @@ app.post('/send-email-modal', async (req, res) => {
 
 
 
-console.log("Cargando variable MAILER_USER:", process.env.MAILER_USER);
 // Servidor escuchando en el puerto 3000
 app.listen(3000, () => console.log('App corriendo en p 3000'));
