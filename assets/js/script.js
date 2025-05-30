@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Eliminar el mensaje después de 3 segundos
                 setTimeout(() => {
                     responseMessage.innerHTML = '';  // Elimina el mensaje del alert
-                }, 3000);  // 3000 milisegundos = 3 segundos
+                }, 3000); 
                 limpiarFormulario(form);
             } catch (error) {
                 const responseMessage = document.getElementById('response-message');
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Eliminar el mensaje después de 3 segundos
                 setTimeout(() => {
                     responseMessage.innerHTML = '';  // Elimina el mensaje del alert
-                }, 3000);  // 3000 milisegundos = 3 segundos
+                }, 3000);  
 
                 console.error('Error al enviar los datos:', error);
 
@@ -224,6 +224,8 @@ document.addEventListener('DOMContentLoaded', () => {
         500
 
     );
+
+    
     const copy = (idElemento, texto) => {
         const elemento = document.getElementById(idElemento);
         if (elemento) {
@@ -239,6 +241,9 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error(`Elemento con ID '${idElemento}' no encontrado.`);
         }
     };
+
+
+    
 
     // Llamadas a la función para diferentes elementos
     copy("container3", "joeltroncoso2002@gmail.com");
@@ -269,11 +274,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlp_1 = 'https://skatepark.logicaldevjt.cl/';
     const imgElementsp_1 = document.querySelectorAll('.preview-imagep1');
     fetchPreview(urlp_1, imgElementsp_1);
-   
+
     const urlp_2 = 'https://bancosolar.logicaldevjt.cl/';
     const imgElementsp_2 = document.querySelectorAll('.preview-imagep2');
-    fetchPreview(urlp_2, imgElementsp_2); 
-    
+    fetchPreview(urlp_2, imgElementsp_2);
+
     const urlp_3 = 'https://superheroapi.logicaldevjt.cl/';
     const imgElementsp_3 = document.querySelectorAll('.preview-imagep3');
     fetchPreview(urlp_3, imgElementsp_3);
@@ -297,6 +302,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlp_8 = 'https://blackandwhite.logicaldevjt.cl/';
     const imgElementsp_8 = document.querySelectorAll('.preview-imagep8');
     fetchPreview(urlp_8, imgElementsp_8);
-    
+
+
+    const el = document.getElementById("enlacewtsp");
+
+    // Inicializa tooltip
+    const tooltip = new bootstrap.Tooltip(el, {
+        placement: 'bottom',
+        fallbackPlacements: [],
+    });
+    // Crea observer
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                tooltip.show();
+                setTimeout(() => tooltip.hide(), 5000);
+            }
+        });
+    }, { threshold: 1.0 });
+
+    observer.observe(el);
 
 });

@@ -353,6 +353,28 @@ body {
 
 }
 
+.tooltip .tooltip-inner {
+    background-color: #00000059;
+    border: 1px solid aliceblue;
+    border-radius: 12px;
+    padding: 10px 15px;
+}
+
+.tooltip .tooltip-arrow::before {
+    border-style: solid;
+    border-color: transparent;
+    border-width: 5px;
+    border-top-color: #ffffff;
+
+
+    content: "";
+}
+.tooltip[data-popper-placement^="bottom"] .tooltip-arrow::before {
+  border-width: 0 5px 5px 5px; 
+  border-color: transparent transparent aliceblue transparent;
+}
+
+
 /*fin nuevo css*/
 .stack-box {
     display: flex;
